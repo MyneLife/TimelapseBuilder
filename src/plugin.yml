@@ -1,0 +1,5 @@
+name: TimelapseBuilder
+author: MyneLife
+version: .1.0
+main: me.mynelife.timelapsebuilder.TimelapseBuilder
+prefix: Timelapse-Builder
