@@ -1,0 +1,10 @@
+# Netbeans
+/nbproject
+
+# Other folders
+/build
+/dist
+
+# Other files
+/build.xml
+/manifest.mf
