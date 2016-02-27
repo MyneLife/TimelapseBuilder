@@ -1,9 +1,9 @@
 # Netbeans
-nbproject/
+/nbproject
 
 # Other folders
-build/
-dist/
+/build
+/dist
 
 # Other files
 /build.xml
