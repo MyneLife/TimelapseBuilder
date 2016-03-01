@@ -7,7 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @CommandInfo(description = "Start/stop the recording of a Timelapse-Build", usage = "<ID>", aliases = {"recording", "record"})
-public class CommandStartRecordBuilding extends GameCommand {
+public class CommandRecord extends GameCommand {
     
     @Override
     public void onCommand(Player p, String[] args) {
