@@ -20,8 +20,10 @@ public class SetBlockListener implements Listener {
     public void onSetBlock(BlockPlaceEvent e) {
         Location loc = e.getBlockPlaced().getLocation();
         Block block = e.getBlock();
-        plugin.getBlockManager().saveBlock(loc, block);
+        e.getBlock().getWorld().getBlockAt(loc);
+        plugin.getBlockManager().saveBlock(loc, block);        
         
-        e.getPlayer().sendMessage(loc.toString());        
+        e.getPlayer().sendMessage(loc.toString());
+        e.getPlayer().sendMessage(e.getBlock().toString());
     }    
 }

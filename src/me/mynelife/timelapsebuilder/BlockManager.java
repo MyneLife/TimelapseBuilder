@@ -12,6 +12,7 @@ public class BlockManager {
     private static File folder = new File("plugins//TimelapseBuilder");
     private static File blocks = new File("plugins//TimelpaseBuilder//blocks.yml");
     private static YamlConfiguration cfg;
+    private static int blockcounter;
     
     public BlockManager(TimelapseBuilder plugin) {
         this.plugin = plugin;
@@ -25,9 +26,17 @@ public class BlockManager {
 		System.out.println("[BowPVP] The file 'plugins/TimelapseBuilder/blocks.yml' could not be created!");
             } 
         }
+        cfg = YamlConfiguration.loadConfiguration(blocks);
+        blockcounter = 1;
     }
     
     public static void saveBlock(Location loc, Block block) {
-        
+        cfg.set(String.valueOf(blockcounter), block);
+        try {
+            cfg.save(blocks);
+            blockcounter++;
+	} catch (IOException e) {
+            e.printStackTrace();
+	}
     }
 }
