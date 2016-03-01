@@ -2,38 +2,43 @@ package me.mynelife.timelapsebuilder;
 
 import java.io.File;
 import java.io.IOException;
-import org.bukkit.Location;
+import java.util.HashMap;
+import java.util.Map;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class BlockManager {
     
     private TimelapseBuilder plugin;
-    private static File folder = new File("plugins//TimelapseBuilder");
-    private static File blocks = new File("plugins//TimelpaseBuilder//blocks.yml");
-    private static YamlConfiguration cfg;
-    private static int blockcounter;
+    private File folder = new File("plugins//TimelapseBuilder");
+    private File blocksFile;
+    private YamlConfiguration cfg;
+    private int blockcounter;
+    private Map<Integer, Block> blocks = new HashMap<Integer, Block>();
     
-    public BlockManager(TimelapseBuilder plugin) {
+    public BlockManager(TimelapseBuilder plugin, String name) {
         this.plugin = plugin;
         if(!folder.exists()) {
             folder.mkdir();
-	}
-        if(!blocks.exists()) {
+	}        
+        blocksFile = new File("plugins//TimelapseBuilder//" + name + ".yml");
+        if(!blocksFile.exists()) {
            try {
-		blocks.createNewFile();
+		blocksFile.createNewFile();
             } catch(IOException e) {
 		System.out.println("[BowPVP] The file 'plugins/TimelapseBuilder/blocks.yml' could not be created!");
             } 
         }
-        cfg = YamlConfiguration.loadConfiguration(blocks);
+        cfg = YamlConfiguration.loadConfiguration(blocksFile);
         blockcounter = 1;
     }
     
-    public static void saveBlock(Location loc, Block block) {
-        cfg.set(String.valueOf(blockcounter), block);
+    public void saveBlock(Block block) {
+        String blockdata = "[" + block.getX() + "," + block.getY() + "," + block.getZ() + "," + block.getData() + "," + block.getType() + "]";
+        cfg.set(String.valueOf(blockcounter), blockdata);
         try {
-            cfg.save(blocks);
+            cfg.save(blocksFile);
+            blocks.put(blockcounter, block);
             blockcounter++;
 	} catch (IOException e) {
             e.printStackTrace();
