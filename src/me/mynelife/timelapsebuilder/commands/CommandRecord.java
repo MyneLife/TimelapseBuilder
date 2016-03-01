@@ -1,12 +1,11 @@
 package me.mynelife.timelapsebuilder.commands;
 
 import java.io.File;
-import me.mynelife.timelapsebuilder.BlockManager;
 import me.mynelife.timelapsebuilder.TimelapseBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-@CommandInfo(description = "Start/stop the recording of a Timelapse-Build", usage = "<ID>", aliases = {"recording", "record"})
+@CommandInfo(description = "Start/stop the recording of a Timelapse-Build", usage = "<start | stop> <name>", aliases = {"recording", "record"})
 public class CommandRecord extends GameCommand {
     
     @Override
@@ -19,26 +18,24 @@ public class CommandRecord extends GameCommand {
         }
         
         // Arguments
-        if(args.length < 3) {
+        if(args.length <= 1) {
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] Please use the command as following: &2/tlb recording <start | stop> <name>"));
             return;
         }
         
-        if(args[1] == "start") {
-            String name = args[2];
+        if(args[0].equalsIgnoreCase("start")) {
+            String name = args[1];
             File file = new File("plugins//TimelapseBuilder//" + name + ".yml");
             if(file.exists()) {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] This building already exists! THe building will be appended with the new blocks"));
             } else {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You have started the recording of the building named &2" + name + "&6 successfully!"));
             }  
-            TimelapseBuilder.setActiveBlockManager(name);
-            BlockManager blockmanager = new BlockManager(name);                         
-        } else if(args[1] == "stop") {
+            TimelapseBuilder.setActiveBlockManager(name);                        
+        } else if(args[0].equalsIgnoreCase("stop")) {
             
         } else {
-            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] Please use the command as following: &2/tlb recording <start | stop>"));
-            return;
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] Please use the command as following: &2/tlb recording <start | stop>"));            
         }
     }
 }
