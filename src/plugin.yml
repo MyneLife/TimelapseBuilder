@@ -10,8 +10,35 @@ commands:
     usage: 
       /tlb recording start - Starts recording of your building       
     aliases: timelapsebuilder
-  tlb startrecording:
+  tlb recording start:
     description: Starts the recording of your building!
     permission: tlb.recording.start
     usage: /tlb recording start
     aliases: [tlb startrecord]
+  tlb recording stop:
+    description: Stops the recording of your building!
+    permission: tlb.recording.stop
+    usage: /tlb recording stop
+    aliases: [tlb stoprecord]
+    
+permissions:
+  tlb.*:
+    description: Allows you to perform every command with Timelapse-Build
+    default: op
+    children:
+      tlb.recording.*: true
+      tlb.recording.start: true
+      tlb.recording.stop: true
+  tlb.recording.*:
+    description: Allows you to start and stop recordings from buildings
+    default: op
+    children:
+      tlb.recording.start: true
+      tlb.recording.stop: true
+  tlb.recording.start:
+    description: Allows you to start recordings from buildings 
+    default: op
+  tlb.recording.stop:
+    description: Allows you to stop recordings from buildings 
+    default: op  
+    
