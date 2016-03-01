@@ -18,7 +18,9 @@ public class SetBlockListener implements Listener {
     @EventHandler
     public void onSetBlock(BlockPlaceEvent e) {
         Block block = e.getBlock();
-        plugin.getBlockManager().saveBlock(block);                
-        e.getPlayer().sendMessage(e.getBlock().toString());
+        if(plugin.getActiveBlockManager() != null && plugin.getActiveBlockManager().getName() != "") {        
+            plugin.getActiveBlockManager().saveBlock(block);
+            e.getPlayer().sendMessage(e.getBlock().toString());
+        }
     }    
 }

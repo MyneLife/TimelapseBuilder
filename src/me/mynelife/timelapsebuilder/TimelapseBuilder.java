@@ -1,5 +1,7 @@
 package me.mynelife.timelapsebuilder;
 
+import java.io.File;
+import me.mynelife.timelapsebuilder.commands.CommandManager;
 import me.mynelife.timelapsebuilder.listener.SetBlockListener;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -7,7 +9,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class TimelapseBuilder extends JavaPlugin implements Listener {
     
     private static boolean enabled;
-    private String activeBlockManager;
+    private static BlockManager activeBlockManager;
+    private File folder = new File("plugins//TimelapseBuilder");
     
     @Override
     public void onEnable() {
@@ -18,7 +21,10 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
             System.out.println("[Timelapse Builder] TLB is enabled! Loading options...");
             registerListener();
             registerCommands();
-            activeBlockManager = "";
+            activeBlockManager = null;
+            if(!folder.exists()) {
+                folder.mkdir();
+            }   
         } else {
             System.out.println("[Timelapse Builder] TLB is disabled in config.yml!");
             System.out.println("[Timelapse Builder] TLB is now disabled!");
@@ -36,7 +42,7 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
     }
     
     public void registerCommands() {
-        //getCommand("tlb").setExecutor(new CommandManager());
+        getCommand("tlb").setExecutor(new CommandManager());
     }
     
     public void defaultConfiguration() {
@@ -52,7 +58,11 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
         enabled = getConfig().getBoolean("Config.enabled");
     } 
     
-    public String getActiveBlockManager() {
+    public static BlockManager getActiveBlockManager() {
         return activeBlockManager;
+    }
+    
+    public static void setActiveBlockManager(String name) {
+        activeBlockManager = new BlockManager(name);
     }
 }

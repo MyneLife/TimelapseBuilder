@@ -15,6 +15,7 @@ public class CommandManager implements CommandExecutor {
 	
     public CommandManager() {
         cmds = new ArrayList<>();
+        cmds.add(new CommandStartRecordBuilding());
     }
 
     @Override
@@ -25,12 +26,12 @@ public class CommandManager implements CommandExecutor {
             return true;
         }		
         Player p = (Player) sender;		
-        if (cmd.getName().equalsIgnoreCase("token")) {
+        if (cmd.getName().equalsIgnoreCase("tlb")) {
             // Show all commands
             if (args.length == 0) {
                 for (GameCommand gcmd : cmds) {
                     CommandInfo info = gcmd.getClass().getAnnotation(CommandInfo.class);
-                    p.sendMessage(ChatColor.GOLD + "/token <" + StringUtils.join(info.aliases(), ", ").trim() + "> " + info.usage() + " - " + info.description());
+                    p.sendMessage(ChatColor.GOLD + "/tlb <" + StringUtils.join(info.aliases(), ", ").trim() + "> " + info.usage() + " - " + info.description());
                 }			
                 return true;
             }

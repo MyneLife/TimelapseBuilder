@@ -3,3 +3,15 @@ author: MyneLife
 version: .1.0
 main: me.mynelife.timelapsebuilder.TimelapseBuilder
 prefix: Timelapse-Builder
+
+commands:
+  tlb:
+    description: This is the basic Command of Timelapse-Builder
+    usage: 
+      /tlb recording start - Starts recording of your building       
+    aliases: timelapsebuilder
+  tlb startrecording:
+    description: Starts the recording of your building!
+    permission: tlb.recording.start
+    usage: /tlb recording start
+    aliases: [tlb startrecord]
