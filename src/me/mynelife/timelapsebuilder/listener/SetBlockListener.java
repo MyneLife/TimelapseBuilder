@@ -4,6 +4,7 @@ import me.mynelife.timelapsebuilder.TimelapseBuilder;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 public class SetBlockListener implements Listener {
@@ -18,6 +19,9 @@ public class SetBlockListener implements Listener {
     @EventHandler
     public void onSetBlock(BlockPlaceEvent e) {
         Location loc = e.getBlockPlaced().getLocation();
-        e.getPlayer().sendMessage(loc.toString());
-    }
+        Block block = e.getBlock();
+        plugin.getBlockManager().saveBlock(loc, block);
+        
+        e.getPlayer().sendMessage(loc.toString());        
+    }    
 }
