@@ -37,7 +37,7 @@ public class BlockManager {
     }
         
     public void saveBlock(Block block) {
-        String blockdata = "[" + block.getX() + "," + block.getY() + "," + block.getZ() + "," + block.getData() + "," + block.getType() + "]";
+        String blockdata = "[set," + block.getX() + "," + block.getY() + "," + block.getZ() + "," + block.getData() + "," + block.getType() + "]";
         cfg.set(String.valueOf(blockcounter), blockdata);
         cfg.set("0", blockcounter);
         try {
@@ -46,5 +46,17 @@ public class BlockManager {
 	} catch (IOException e) {
             e.printStackTrace();
 	}
-    }    
+    }
+
+    public void removeBlock(Block block) {
+        String blockdata = "[remove," + block.getX() + "," + block.getY() + "," + block.getZ() + "," + block.getData() + "," + block.getType() + "]";
+        cfg.set(String.valueOf(blockcounter), blockdata);
+        cfg.set("0", blockcounter);
+        try {
+            cfg.save(blocksFile);
+            blockcounter++;
+	} catch (IOException e) {
+            e.printStackTrace();
+	}
+    }
 }
