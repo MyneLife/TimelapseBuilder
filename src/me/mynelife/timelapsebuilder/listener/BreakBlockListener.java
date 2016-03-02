@@ -1,25 +1,25 @@
 package me.mynelife.timelapsebuilder.listener;
 
 import me.mynelife.timelapsebuilder.TimelapseBuilder;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.block.Block;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockBreakEvent;
 
-public class SetBlockListener implements Listener {
+public class BreakBlockListener implements Listener {
     
     private TimelapseBuilder plugin;
     
-    public SetBlockListener(TimelapseBuilder plugin) {
+    public BreakBlockListener(TimelapseBuilder plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     
     @EventHandler
-    public void onSetBlock(BlockPlaceEvent e) {
+    public void onSetBlock(BlockBreakEvent e) {
         Block block = e.getBlock();
         if(plugin.getActiveBlockManager() != null && plugin.getActiveBlockManager().getName() != "") {        
-            plugin.getActiveBlockManager().saveBlock(block);
+            plugin.getActiveBlockManager().removeBlock(block);
         }
-    }    
+    }
 }

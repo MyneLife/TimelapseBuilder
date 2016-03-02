@@ -2,6 +2,7 @@ package me.mynelife.timelapsebuilder;
 
 import java.io.File;
 import me.mynelife.timelapsebuilder.commands.CommandManager;
+import me.mynelife.timelapsebuilder.listener.BreakBlockListener;
 import me.mynelife.timelapsebuilder.listener.SetBlockListener;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -39,6 +40,7 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
     
     public void registerListener() {
         new SetBlockListener(this);
+        new BreakBlockListener(this);
     }
     
     public void registerCommands() {
