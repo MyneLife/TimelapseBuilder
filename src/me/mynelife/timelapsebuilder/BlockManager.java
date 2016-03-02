@@ -1,3 +1,8 @@
+/** TODO
+ * Welten-Name mit speichern!
+ * building Kommandos
+ */
+
 package me.mynelife.timelapsebuilder;
 
 import java.io.File;

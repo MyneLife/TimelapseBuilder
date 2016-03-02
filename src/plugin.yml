@@ -15,6 +15,7 @@ commands:
       /tlb building stop - Stops the build-process of your building
       /tlb building pause - Pauses the build-process of your building
       /tlb building continue - Continues the build-process of your building
+      /tlb building reset - Resets all blocks for the build-process of your building
     aliases: timelapsebuilder
   tlb recording start:
     description: Starts the recording of your building!
@@ -35,18 +36,27 @@ commands:
     description: Starts the building-process of your building!
     permission: tlb.building.start
     usage: /tlb building start <ID>
+    aliases: [tlb startbuilding]
   tlb building stop:
     description: Stops the building-process of your building!
     permission: tlb.building.stop
     usage: /tlb building stop
+    aliases: [tlb stopbuilding]
   tlb building pause:
     description: Pauses the building-process of your building!
     permission: tlb.building.pause
     usage: /tlb building pause
+    aliases: [tlb pausebuilding]
   tlb building continue:
     description: Continues the building-process of your building!
     permission: tlb.building.continue
     usage: /tlb building continue
+    aliases: [tlb continuebuilding]
+  tlb building reset:
+    description: Resets all blocks of your building!
+    permission: tlb.building.reset
+    usage: /tlb building reset <ID>
+    aliases: [tlb resetbuilding]
         
 permissions:
   tlb.*:
@@ -62,6 +72,7 @@ permissions:
       tlb.building.stop: true
       tlb.building.pause: true
       tlb.building.continue: true
+      tlb.building.reset: true
   tlb.recording.*:
     description: Allows you to handle recordings of buildings
     default: op
@@ -86,6 +97,7 @@ permissions:
       tlb.building.stop: true
       tlb.building.pause: true
       tlb.building.continue: true
+      tlb.building.reset: true
   tlb.building.start:
     description: Allows you to start the build-process of buildings
     default: op
@@ -97,4 +109,7 @@ permissions:
     default: op
   tlb.building.continue:
     description: Allows you to continue the build-process of buildings
+    default: op
+  tlb.building.reset:
+    description: Allows you to reset all blocks for the build-process
     default: op
