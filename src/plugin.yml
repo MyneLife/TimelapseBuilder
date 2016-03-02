@@ -1,6 +1,6 @@
 name: TimelapseBuilder
 author: MyneLife
-version: .1.0
+version: 1.0
 main: me.mynelife.timelapsebuilder.TimelapseBuilder
 prefix: Timelapse-Builder
 
@@ -8,7 +8,13 @@ commands:
   tlb:
     description: This is the basic Command of Timelapse-Builder
     usage: 
-      /tlb recording start - Starts recording of your building       
+      /tlb recording start <ID> - Starts recording of your building
+      /tlb recording stop - Stops recording of your building
+      /tlb recording delete <ID> - Deletes recording of your building
+      /tlb building start <ID> - Starts the build-process of your building
+      /tlb building stop - Stops the build-process of your building
+      /tlb building pause - Pauses the build-process of your building
+      /tlb building continue - Continues the build-process of your building
     aliases: timelapsebuilder
   tlb recording start:
     description: Starts the recording of your building!
@@ -25,7 +31,23 @@ commands:
     permission: tlb.recording.delete
     usage: /tlb recording delete <ID>
     aliases: [tlb deleterecord]
-    
+  tlb building start:
+    description: Starts the building-process of your building!
+    permission: tlb.building.start
+    usage: /tlb building start <ID>
+  tlb building stop:
+    description: Stops the building-process of your building!
+    permission: tlb.building.stop
+    usage: /tlb building stop
+  tlb building pause:
+    description: Pauses the building-process of your building!
+    permission: tlb.building.pause
+    usage: /tlb building pause
+  tlb building continue:
+    description: Continues the building-process of your building!
+    permission: tlb.building.continue
+    usage: /tlb building continue
+        
 permissions:
   tlb.*:
     description: Allows you to perform every command with Timelapse-Build
@@ -35,20 +57,44 @@ permissions:
       tlb.recording.start: true
       tlb.recording.stop: true
       tlb.recording.delete: true
+      tlb.building.*: true
+      tlb.building.start: true
+      tlb.building.stop: true
+      tlb.building.pause: true
+      tlb.building.continue: true
   tlb.recording.*:
-    description: Allows you to start and stop recordings from buildings
+    description: Allows you to handle recordings of buildings
     default: op
     children:
       tlb.recording.start: true
       tlb.recording.stop: true
       tlb.recording.delete: true
   tlb.recording.start:
-    description: Allows you to start recordings from buildings 
+    description: Allows you to start recordings of buildings 
     default: op
   tlb.recording.stop:
-    description: Allows you to stop recordings from buildings 
+    description: Allows you to stop recordings of buildings 
     default: op
   tlb.recording.delete:
     description: Allows you to delete recordings
     default: op
-    
+  tlb.building.*:
+    description: Allows you to handle the build process of buildings
+    default: op
+    children:
+      tlb.building.start: true
+      tlb.building.stop: true
+      tlb.building.pause: true
+      tlb.building.continue: true
+  tlb.building.start:
+    description: Allows you to start the build-process of buildings
+    default: op
+  tlb.building.stop:
+    description: Allows you to stop the build-process of buildings
+    default: op
+  tlb.building.pause:
+    description: Allows you to pause the build-process of buildings
+    default: op
+  tlb.building.continue:
+    description: Allows you to continue the build-process of buildings
+    default: op
