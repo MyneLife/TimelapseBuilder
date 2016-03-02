@@ -27,8 +27,7 @@ public class BlockManager {
             } 
         } else {
             cfg = YamlConfiguration.loadConfiguration(blocksFile);
-            blockcounter = cfg.getInt("0");
-            System.out.println(cfg.getInt("0"));             
+            blockcounter = cfg.getInt("0");             
         }                
     }
     
