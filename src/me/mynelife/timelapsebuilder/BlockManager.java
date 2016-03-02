@@ -5,9 +5,7 @@ import java.io.IOException;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class BlockManager {
-    
-    private TimelapseBuilder plugin;
+public class BlockManager {    
     
     private File blocksFile;
     private YamlConfiguration cfg;
@@ -22,14 +20,15 @@ public class BlockManager {
 		blocksFile.createNewFile();
                 blockcounter = 1;
                 cfg = YamlConfiguration.loadConfiguration(blocksFile);                
-                cfg.set("0", String.valueOf(blockcounter));
+                cfg.set("0", blockcounter);
                 cfg.save(blocksFile);
             } catch(IOException e) {
 		System.out.println("[Timelapse Builder] The file 'plugins/TimelapseBuilder/" + name + ".yml' could not be created!");
             } 
         } else {
             cfg = YamlConfiguration.loadConfiguration(blocksFile);
-            blockcounter = cfg.getInt("0");  
+            blockcounter = cfg.getInt("0");
+            System.out.println(cfg.getInt("0"));             
         }                
     }
     
@@ -40,7 +39,7 @@ public class BlockManager {
     public void saveBlock(Block block) {
         String blockdata = "[" + block.getX() + "," + block.getY() + "," + block.getZ() + "," + block.getData() + "," + block.getType() + "]";
         cfg.set(String.valueOf(blockcounter), blockdata);
-        cfg.set("0", String.valueOf(blockcounter));
+        cfg.set("0", blockcounter);
         try {
             cfg.save(blocksFile);
             blockcounter++;
