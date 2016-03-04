@@ -28,9 +28,7 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
             registerCommands();
             activeBlockManager = null;
             resetBuildingsTickrate = setResetBuildingsTickrate();
-            System.out.println("Reset-Tickrate: " + resetBuildingsTickrate);
             buildBuildingsTickrate = setBuildBuildingsTickrate();
-            System.out.println("Build-Tickrate: " + buildBuildingsTickrate);
             if(!folder.exists()) {
                 folder.mkdir();
             }   

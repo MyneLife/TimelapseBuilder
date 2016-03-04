@@ -35,16 +35,19 @@ public class CommandBuilding extends GameCommand {
         //Stop building-process
         if(args.length >= 1 && args[0].equalsIgnoreCase("stop")) {
             Bukkit.getScheduler().cancelTask(countBuild);
-                        
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You have stopped the build-process!"));            
         
+            
         //Pause building-process
         } else if(args.length >= 1 && args[0].equalsIgnoreCase("pause")) {
             buildingOnPause = true;
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You have paused the build-process!"));
             
             
         //Continue building-process    
         } else if(args.length >= 1 && args[0].equalsIgnoreCase("continue")) {
             buildingOnPause = false;
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] The build-process will be continued!"));
             
             
         //Start building    
