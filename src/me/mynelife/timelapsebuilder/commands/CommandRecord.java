@@ -36,7 +36,7 @@ public class CommandRecord extends GameCommand {
             } else {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You have started the recording of the building named &2" + name + "&6 successfully!"));              
             }  
-            TimelapseBuilder.setActiveBlockManager(name);
+            TimelapseBuilder.setActiveBlockManager(name, p.getWorld().getName());
             return;
         }
         

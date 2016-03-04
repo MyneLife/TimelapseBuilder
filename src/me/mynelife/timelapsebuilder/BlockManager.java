@@ -1,8 +1,3 @@
-/** TODO
- * Welten-Name mit speichern!
- * building Kommandos
- */
-
 package me.mynelife.timelapsebuilder;
 
 import java.io.File;
@@ -16,15 +11,18 @@ public class BlockManager {
     private YamlConfiguration cfg;
     private int blockcounter;
     private String name;
+    private String worldname;
     
-    public BlockManager(String name) {
-        this.name = name;             
+    public BlockManager(String name, String worldname) {
+        this.name = name;
+        this.worldname = worldname;
         blocksFile = new File("plugins//TimelapseBuilder//" + name + ".yml");
         if(!blocksFile.exists()) {
            try {
 		blocksFile.createNewFile();
                 blockcounter = 1;
-                cfg = YamlConfiguration.loadConfiguration(blocksFile);                
+                cfg = YamlConfiguration.loadConfiguration(blocksFile);
+                cfg.set("world", worldname);
                 cfg.set("0", blockcounter);
                 cfg.save(blocksFile);
             } catch(IOException e) {
@@ -38,6 +36,10 @@ public class BlockManager {
     
     public String getName() {
         return name;
+    }
+    
+    public String getWorldName() {
+        return worldname;
     }
         
     public void saveBlock(Block block) {

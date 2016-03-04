@@ -2,10 +2,12 @@ package me.mynelife.timelapsebuilder.commands;
 
 import java.io.File;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.World;
 
-@CommandInfo(description = "Start/stop/pause/continue a building of a Timelapse-Build", usage = "<start | stop | pause | continue> <name>", aliases = {"building", "build"})
+@CommandInfo(description = "Start/stop/pause/continue/reset a building of a Timelapse-Build", usage = "<start | stop | pause | continue | reset> <name>", aliases = {"building", "build"})
 public class CommandBuilding extends GameCommand {
     
     @Override
@@ -41,11 +43,26 @@ public class CommandBuilding extends GameCommand {
                     blockdata = blockdata.replace("[", "");
                     blockdata = blockdata.replace("]", "");
                     String[] data = blockdata.split(",");
-                    
+                    //Coordinates                   
                     int x = Integer.valueOf(data[1]);
                     int y = Integer.valueOf(data[2]);
                     int z = Integer.valueOf(data[3]);
+                    //Set or Remove?
+                    String mode = data[0];
+                    //World
+                    String worldname = cfg.getString("world");
+                    World world = p.getServer().getWorld(worldname);
+                    //Data & Material
+                    byte id = Byte.valueOf(data[4]);
+                    String material = data[5];
                     
+                    if(mode.equalsIgnoreCase("remove")) {
+                        world.getBlockAt(x, y, z).setType(Material.getMaterial(material));
+                        world.getBlockAt(x, y, z).setData(id);
+                    } else if(mode.equalsIgnoreCase("set")) {
+                        world.getBlockAt(x, y, z).setType(Material.AIR);
+                    }
+                    return;
                 }
             }
         }

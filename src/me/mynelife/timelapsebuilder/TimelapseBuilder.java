@@ -64,8 +64,8 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
         return activeBlockManager;
     }
     
-    public static void setActiveBlockManager(String name) {
-        activeBlockManager = new BlockManager(name);
+    public static void setActiveBlockManager(String name, String worldname) {
+        activeBlockManager = new BlockManager(name, worldname);
     }
     
     public static void resetActiveBlockManager() {
