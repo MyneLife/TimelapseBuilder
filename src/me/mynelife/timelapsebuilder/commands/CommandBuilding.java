@@ -48,38 +48,27 @@ public class CommandBuilding extends GameCommand {
                     @Override
                     public void run() {
                         if(blockcounter >= 1) {
-                            System.out.println("blockcounter: " + String.valueOf(blockcounter));
                             String blockdata = cfg.getString(String.valueOf(blockcounter));
-                            System.out.println("BlockDaten: " + blockdata);
-                            System.out.println("Schleife");
                             blockdata = blockdata.replace("[", "");
                             blockdata = blockdata.replace("]", "");
-                            System.out.println("BlockDaten später: " + blockdata);
                             String[] data = blockdata.split(",");
-                            System.out.println(data);
+                            //Set or Remove?
+                            String mode = data[0];
                             //Coordinates                   
                             int x = Integer.valueOf(data[1]);
                             int y = Integer.valueOf(data[2]);
-                            int z = Integer.valueOf(data[3]);
-                            //Set or Remove?
-                            String mode = data[0];
+                            int z = Integer.valueOf(data[3]);                            
                             //World
                             String worldname = cfg.getString("world");
                             World world = p.getServer().getWorld(worldname);
-                            System.out.println("Welt: ");
-                            System.out.println(world);
                             //Data & Material
                             byte id = Byte.valueOf(data[4]);
-                            System.out.println("Byte: " + String.valueOf(id));
                             String material = data[5];
-                            System.out.println("Material: " + material);
 
                             if(mode.equalsIgnoreCase("remove")) {
-                                System.out.println("Remove");
                                 world.getBlockAt(x, y, z).setType(Material.getMaterial(material));
                                 world.getBlockAt(x, y, z).setData(id);
                             } else if(mode.equalsIgnoreCase("set")) {
-                                System.out.println("Set");
                                 world.getBlockAt(x, y, z).setType(Material.AIR);
                             }
                             blockcounter--;
@@ -88,7 +77,7 @@ public class CommandBuilding extends GameCommand {
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] The building called &2" + name + "&6 reseted successfully!"));
                         }
                     }
-                }, 0L, Long.valueOf(TimelapseBuilder.getResetBuildingsTickrate()));
+                }, 0L, TimelapseBuilder.getResetBuildingsTickrate());
                 return;
             }
         }

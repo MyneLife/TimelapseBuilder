@@ -10,8 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class TimelapseBuilder extends JavaPlugin implements Listener {
     
     private static boolean enabled;
-    private static int resetBuildingsTickrate;
-    private static int buildBuildingsTickrate;
+    private static int resetBuildingsBPS;
+    private static int buildBuildingsBPS;
     private static BlockManager activeBlockManager;
     private final File folder = new File("plugins//TimelapseBuilder");
     
@@ -54,8 +54,8 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
         getConfig().addDefault("Config.enabled", true);
         
         //BuildingSpeeds
-        getConfig().addDefault("Rates.resetBuildingsTicks", 4);
-        getConfig().addDefault("Rates.buildBuildingsTicks", 4);
+        getConfig().addDefault("BlocksPerSecond.resetBuildings", 4);
+        getConfig().addDefault("BlocksPerSecond.buildBuildings", 4);
         
         getConfig().options().copyDefaults(true);
         saveConfig();
@@ -66,8 +66,8 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
         enabled = getConfig().getBoolean("Config.enabled");
         
         //Building-Speeds
-        resetBuildingsTickrate = getConfig().getInt("Rates.resetBuildingsTicks");
-        resetBuildingsTickrate = getConfig().getInt("Rates.buildBuildingsTicks");
+        resetBuildingsBPS = getConfig().getInt("BlocksPerSecond.resetBuildings");
+        resetBuildingsBPS = getConfig().getInt("BlocksPerSecond.buildBuildings");
     } 
     
     public static BlockManager getActiveBlockManager() {
@@ -82,11 +82,13 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
         activeBlockManager = null;
     }
     
-    public static int getResetBuildingsTickrate() {
-        return resetBuildingsTickrate;
+    public static long getResetBuildingsTickrate() {
+        int resetTickrate = 20 / resetBuildingsBPS;
+        return (long) resetTickrate;
     }
     
-    public static int getBuildBuildingsTickrate() {
-        return buildBuildingsTickrate;
+    public static long getBuildBuildingsTickrate() {
+        int buildTickrate = 20 / buildBuildingsBPS;
+        return (long) buildTickrate;
     }    
 }
