@@ -12,6 +12,8 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
     private static boolean enabled;
     private static int resetBuildingsBPS;
     private static int buildBuildingsBPS;
+    public static long resetBuildingsTickrate;
+    public static long buildBuildingsTickrate;
     private static BlockManager activeBlockManager;
     private final File folder = new File("plugins//TimelapseBuilder");
     
@@ -25,6 +27,10 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
             registerListener();
             registerCommands();
             activeBlockManager = null;
+            resetBuildingsTickrate = setResetBuildingsTickrate();
+            System.out.println("Reset-Tickrate: " + resetBuildingsTickrate);
+            buildBuildingsTickrate = setBuildBuildingsTickrate();
+            System.out.println("Build-Tickrate: " + buildBuildingsTickrate);
             if(!folder.exists()) {
                 folder.mkdir();
             }   
@@ -54,7 +60,7 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
         getConfig().addDefault("Config.enabled", true);
         
         //BuildingSpeeds
-        getConfig().addDefault("BlocksPerSecond.resetBuildings", 4);
+        getConfig().addDefault("BlocksPerSecond.resetBuildings", 10);
         getConfig().addDefault("BlocksPerSecond.buildBuildings", 4);
         
         getConfig().options().copyDefaults(true);
@@ -67,7 +73,7 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
         
         //Building-Speeds
         resetBuildingsBPS = getConfig().getInt("BlocksPerSecond.resetBuildings");
-        resetBuildingsBPS = getConfig().getInt("BlocksPerSecond.buildBuildings");
+        buildBuildingsBPS = getConfig().getInt("BlocksPerSecond.buildBuildings");
     } 
     
     public static BlockManager getActiveBlockManager() {
@@ -82,13 +88,13 @@ public class TimelapseBuilder extends JavaPlugin implements Listener {
         activeBlockManager = null;
     }
     
-    public static long getResetBuildingsTickrate() {
-        int resetTickrate = 20 / resetBuildingsBPS;
+    public static long setResetBuildingsTickrate() {
+        double resetTickrate = 20.0 / (double) resetBuildingsBPS;
         return (long) resetTickrate;
     }
     
-    public static long getBuildBuildingsTickrate() {
-        int buildTickrate = 20 / buildBuildingsBPS;
+    public static long setBuildBuildingsTickrate() {
+        double buildTickrate = 20.0 / (double) buildBuildingsBPS;
         return (long) buildTickrate;
     }    
 }

@@ -12,9 +12,14 @@ import org.bukkit.World;
 @CommandInfo(description = "Start/stop/pause/continue/reset a building of a Timelapse-Build", usage = "<start | stop | pause | continue | reset> <name>", aliases = {"building", "build"})
 public class CommandBuilding extends GameCommand {
     
+    //Counter for Bukkit-Scheduler on reset command
     static int countReset;
+    //Counter for Bukkit-Scheduler on build command
     static int countBuild;
+    //Counter from name.yml-file to count blockindex
     static int blockcounter;
+    //Counter for building-process  
+    static int counter;
     
     @Override
     public void onCommand(Player p, String[] args) {
@@ -48,13 +53,13 @@ public class CommandBuilding extends GameCommand {
                 return;
             }
             blockcounter = cfg.getInt("0");
-            blockcounter--;
+            counter = 1;
             countBuild = Bukkit.getScheduler().scheduleSyncRepeatingTask(TimelapseBuilder.getProvidingPlugin(getClass()), new Runnable() {                                        
 
                 @Override
                 public void run() {
-                    if(blockcounter >= 1) {
-                        String blockdata = cfg.getString(String.valueOf(blockcounter));
+                    if(counter < blockcounter) {
+                        String blockdata = cfg.getString(String.valueOf(counter));
                         blockdata = blockdata.replace("[", "");
                         blockdata = blockdata.replace("]", "");
                         String[] data = blockdata.split(",");
@@ -77,13 +82,14 @@ public class CommandBuilding extends GameCommand {
                         } else if(mode.equalsIgnoreCase("remove")) {
                             world.getBlockAt(x, y, z).setType(Material.AIR);
                         }
-                        blockcounter--;
+                        counter++;
                     } else {
                         Bukkit.getScheduler().cancelTask(countBuild);
+                        counter = 1;
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] The building called &2" + name + "&6 built successfully!"));
                     }
                 }
-            }, 0L, TimelapseBuilder.getBuildBuildingsTickrate());
+            }, 0L, TimelapseBuilder.buildBuildingsTickrate);
 
             
         //Reset building    
@@ -131,7 +137,7 @@ public class CommandBuilding extends GameCommand {
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] The building called &2" + name + "&6 reseted successfully!"));
                         }
                     }
-                }, 0L, TimelapseBuilder.getResetBuildingsTickrate());
+                }, 0L, TimelapseBuilder.resetBuildingsTickrate);
             }
         }
     }
