@@ -18,9 +18,9 @@ public class CommandRecord extends GameCommand {
         }
         
         //stop recording
-        if(args.length == 1 && args[0].equalsIgnoreCase("stop")) {
-            TimelapseBuilder.resetActiveBlockManager();
+        if(args.length == 1 && args[0].equalsIgnoreCase("stop")) {            
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You have stopped the recording named &2" + TimelapseBuilder.getActiveBlockManager().getName() + "&6 successfully!"));            
+            TimelapseBuilder.resetActiveBlockManager();
             return;
         }
         

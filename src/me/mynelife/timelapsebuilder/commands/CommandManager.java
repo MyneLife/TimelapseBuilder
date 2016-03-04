@@ -16,6 +16,7 @@ public class CommandManager implements CommandExecutor {
     public CommandManager() {
         cmds = new ArrayList<>();
         cmds.add(new CommandRecord());
+        cmds.add(new CommandBuilding());
     }
 
     @Override

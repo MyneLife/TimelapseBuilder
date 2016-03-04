@@ -8,7 +8,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 public class SetBlockListener implements Listener {
     
-    private TimelapseBuilder plugin;
+    public TimelapseBuilder plugin;
     
     public SetBlockListener(TimelapseBuilder plugin) {
         this.plugin = plugin;
