@@ -24,34 +24,44 @@ public class CommandBuilding extends GameCommand {
     static boolean buildingOnPause;
     
     @Override
-    public void onCommand(Player p, String[] args) {
-        
-        //Permission
-        if(!(p.hasPermission("tlb.building.start")) || !(p.hasPermission("tlb.building.stop")) || !(p.hasPermission("tlb.building.pause")) || !(p.hasPermission("tlb.building.continue"))) {
-            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You don't have &4permissions &6to use this command!"));
-            return;
-        }
+    public void onCommand(Player p, String[] args) {        
         
         //Stop building-process
         if(args.length >= 1 && args[0].equalsIgnoreCase("stop")) {
+            if(!p.hasPermission("tlb.building.stop")) {  
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You don't have &4permissions &6to use this command!"));
+                return;
+            }
             Bukkit.getScheduler().cancelTask(countBuild);
-            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You have stopped the build-process!"));            
-        
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You have stopped the build-process!"));                
+            
             
         //Pause building-process
         } else if(args.length >= 1 && args[0].equalsIgnoreCase("pause")) {
+            if(!p.hasPermission("tlb.building.pause")) { 
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You don't have &4permissions &6to use this command!"));
+                return;
+            }
             buildingOnPause = true;
-            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You have paused the build-process!"));
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You have paused the build-process!"));                                     
             
             
         //Continue building-process    
         } else if(args.length >= 1 && args[0].equalsIgnoreCase("continue")) {
+            if(!p.hasPermission("tlb.building.continue")) {  
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You don't have &4permissions &6to use this command!"));
+                return;
+            }
             buildingOnPause = false;
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] The build-process will be continued!"));
             
             
         //Start building    
         } else if(args.length >= 2 && args[0].equalsIgnoreCase("start")) {
+            if(!p.hasPermission("tlb.building.start")) { 
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You don't have &4permissions &6to use this command!"));
+                return;
+            }
             String name = args[1];
             File file = new File("plugins//TimelapseBuilder//" + name + ".yml");
             if(!file.exists()) {
@@ -109,11 +119,14 @@ public class CommandBuilding extends GameCommand {
             
         //Reset building    
         } else if(args.length >= 2 && args[0].equalsIgnoreCase("reset")) {
+            if(!p.hasPermission("tlb.building.reset")) { 
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You don't have &4permissions &6to use this command!"));
+                return;
+            }
             String name = args[1];
             File file = new File("plugins//TimelapseBuilder//" + name + ".yml");
             if(!file.exists()) {
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] The building called &4" + name + "&6 doesn't exists!"));
-                return;
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] The building called &4" + name + "&6 doesn't exists!"));                
             } else {
                 YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
                 blockcounter = cfg.getInt("0");
@@ -155,7 +168,7 @@ public class CommandBuilding extends GameCommand {
                 }, 0L, TimelapseBuilder.resetBuildingsTickrate);
             }
         } else {
-            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] Please use &2/tlb building &6to see all vaild commands!"));
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] Please use &2/tlb build &6to see all vaild commands!"));
         }
     }
 }

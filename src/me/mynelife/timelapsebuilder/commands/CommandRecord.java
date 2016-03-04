@@ -11,14 +11,12 @@ public class CommandRecord extends GameCommand {
     @Override
     public void onCommand(Player p, String[] args) {
         
-        //Permission
-        if(!(p.hasPermission("tlb.recording.start")) || !(p.hasPermission("tlb.recording.stop")) || !(p.hasPermission("tlb.recording.delete"))) {
-            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You don't have &4permissions &6to use this command!"));
-            return;
-        }
-        
         //stop recording
-        if(args.length == 1 && args[0].equalsIgnoreCase("stop")) {            
+        if(args[0].equalsIgnoreCase("stop")) {
+            if(!p.hasPermission("tlb.recording.stop")) { 
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You don't have &4permissions &6to use this command!"));
+                return;
+            }            
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You have stopped the recording named &2" + TimelapseBuilder.getActiveBlockManager().getName() + "&6 successfully!"));            
             TimelapseBuilder.resetActiveBlockManager();
             return;
@@ -29,6 +27,10 @@ public class CommandRecord extends GameCommand {
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] Please use the command as following: &2/tlb recording start <name>"));
             return;
         } else if(args.length == 2 && args[0].equalsIgnoreCase("start")) {
+            if(!p.hasPermission("tlb.recording.start")) { 
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You don't have &4permissions &6to use this command!"));
+                return;
+            }
             String name = args[1];
             File file = new File("plugins//TimelapseBuilder//" + name + ".yml");
             if(file.exists()) {
@@ -45,6 +47,10 @@ public class CommandRecord extends GameCommand {
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] Please use the command as following: &2/tlb recording delete <name>"));
             return;
         } else if(args.length == 2 && args[0].equalsIgnoreCase("delete")) {
+            if(!p.hasPermission("tlb.recording.delete")) { 
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] You don't have &4permissions &6to use this command!"));
+                return;
+            }
             String name = args[1];
             File file = new File("plugins//TimelapseBuilder//" + name + ".yml");
             if(file.exists()) {
@@ -56,6 +62,6 @@ public class CommandRecord extends GameCommand {
             return;
         }
                 
-        p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] Please use the command as following: &2/tlb recording <start | stop | delete> <ID>"));                    
+        p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] Please use the command &2/tlb recording&6 for more informations!"));                    
     }
 }
