@@ -20,6 +20,8 @@ public class CommandBuilding extends GameCommand {
     static int blockcounter;
     //Counter for building-process  
     static int counter;
+    //Is the build-process running or on pause?
+    static boolean buildingOnPause;
     
     @Override
     public void onCommand(Player p, String[] args) {
@@ -30,12 +32,19 @@ public class CommandBuilding extends GameCommand {
             return;
         }
         
+        //Stop building-process
         if(args.length >= 1 && args[0].equalsIgnoreCase("stop")) {
             Bukkit.getScheduler().cancelTask(countBuild);
-            
+                        
+        
+        //Pause building-process
         } else if(args.length >= 1 && args[0].equalsIgnoreCase("pause")) {
+            buildingOnPause = true;
             
+            
+        //Continue building-process    
         } else if(args.length >= 1 && args[0].equalsIgnoreCase("continue")) {
+            buildingOnPause = false;
             
             
         //Start building    
@@ -54,39 +63,42 @@ public class CommandBuilding extends GameCommand {
             }
             blockcounter = cfg.getInt("0");
             counter = 1;
+            buildingOnPause= false;
             countBuild = Bukkit.getScheduler().scheduleSyncRepeatingTask(TimelapseBuilder.getProvidingPlugin(getClass()), new Runnable() {                                        
 
                 @Override
                 public void run() {
-                    if(counter < blockcounter) {
-                        String blockdata = cfg.getString(String.valueOf(counter));
-                        blockdata = blockdata.replace("[", "");
-                        blockdata = blockdata.replace("]", "");
-                        String[] data = blockdata.split(",");
-                        //Set or Remove?
-                        String mode = data[0];
-                        //Coordinates                   
-                        int x = Integer.valueOf(data[1]);
-                        int y = Integer.valueOf(data[2]);
-                        int z = Integer.valueOf(data[3]);                            
-                        //World
-                        String worldname = cfg.getString("world");
-                        World world = p.getServer().getWorld(worldname);
-                        //Data & Material
-                        byte id = Byte.valueOf(data[4]);
-                        String material = data[5];
+                    if(!buildingOnPause) {
+                        if(counter < blockcounter) {
+                            String blockdata = cfg.getString(String.valueOf(counter));
+                            blockdata = blockdata.replace("[", "");
+                            blockdata = blockdata.replace("]", "");
+                            String[] data = blockdata.split(",");
+                            //Set or Remove?
+                            String mode = data[0];
+                            //Coordinates                   
+                            int x = Integer.valueOf(data[1]);
+                            int y = Integer.valueOf(data[2]);
+                            int z = Integer.valueOf(data[3]);                            
+                            //World
+                            String worldname = cfg.getString("world");
+                            World world = p.getServer().getWorld(worldname);
+                            //Data & Material
+                            byte id = Byte.valueOf(data[4]);
+                            String material = data[5];
 
-                        if(mode.equalsIgnoreCase("set")) {
-                            world.getBlockAt(x, y, z).setType(Material.getMaterial(material));
-                            world.getBlockAt(x, y, z).setData(id);
-                        } else if(mode.equalsIgnoreCase("remove")) {
-                            world.getBlockAt(x, y, z).setType(Material.AIR);
+                            if(mode.equalsIgnoreCase("set")) {
+                                world.getBlockAt(x, y, z).setType(Material.getMaterial(material));
+                                world.getBlockAt(x, y, z).setData(id);
+                            } else if(mode.equalsIgnoreCase("remove")) {
+                                world.getBlockAt(x, y, z).setType(Material.AIR);
+                            }
+                            counter++;
+                        } else {
+                            Bukkit.getScheduler().cancelTask(countBuild);
+                            counter = 1;
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] The building called &2" + name + "&6 built successfully!"));
                         }
-                        counter++;
-                    } else {
-                        Bukkit.getScheduler().cancelTask(countBuild);
-                        counter = 1;
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] The building called &2" + name + "&6 built successfully!"));
                     }
                 }
             }, 0L, TimelapseBuilder.buildBuildingsTickrate);
@@ -139,6 +151,8 @@ public class CommandBuilding extends GameCommand {
                     }
                 }, 0L, TimelapseBuilder.resetBuildingsTickrate);
             }
+        } else {
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Timelapse Builder] Please use &2/tlb building &6to see all vaild commands!"));
         }
     }
 }
