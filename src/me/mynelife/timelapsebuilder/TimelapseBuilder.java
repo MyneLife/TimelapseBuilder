@@ -1,3 +1,7 @@
+/** TODO 
+ * - add private mode
+ * - add other events then break and set blocks e.g. leaves
+ */
 package me.mynelife.timelapsebuilder;
 
 import java.io.File;
